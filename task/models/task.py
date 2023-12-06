@@ -15,7 +15,7 @@ class Task(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
     difficulty = models.IntegerField(choices=difficulty_choices)
-    created_by = models.ForeignKey(User, models.PROTECT)
+    created_by = models.ForeignKey(to=User, on_delete=models.PROTECT)
     # created_by = models.OneToOneField(Mentor, on_delete=models.CASCADE)
     # upload_by = models.ForeignKey(Profile, on_delete=models.CASCADE)
 

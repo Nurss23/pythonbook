@@ -10,7 +10,7 @@ class TaskDetailAPIView(APIView):
         serializer = TaskSerializer(instance=task_object)
         return Response(serializer.data)
     
-    def put(sdelf, request, *args, **kwargs):
+    def put(self, request, *args, **kwargs):
         task_object= Task.objects.get(pk=kwargs.get("pk"))
 
         serializer = TaskUpdateSerializer(
@@ -23,9 +23,10 @@ class TaskDetailAPIView(APIView):
         else:
             return Response(serializer.errors, 400)
     
-    def delete(sdelf, request, *args, **kwargs):
+    def delete(self, request, *args, **kwargs):
         task_object= Task.objects.get(pk=kwargs.get("pk"))  
-        task_object.delete()    
+        task_object.delete() 
+        return Response("Запись удалена", 204)   
     
 class TasksView(APIView):
     def get(self, request, *args, **kwargs):
