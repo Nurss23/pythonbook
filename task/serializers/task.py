@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from task.models.task import *
 from users.serializers import UserSerializer
-
+from django.contrib.auth.models import User
 
 class TaskSerializer(serializers.ModelSerializer):
     # views_by = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
@@ -25,6 +25,19 @@ class TaskUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
         fields = ['name', 'description','difficulty']
+
+class TaskAddViewSerializer(serializers.ModelSerializer):
+    user_id = serializers.IntegerField(source='views_by.id')
+
+    class Meta:
+        model = Task
+        fields = ['user_id']
+
+    def update(self, instance, validated_data):
+        user_id = validated_data.get('user_id')
+        user_object = User.objects.get(id=user_id)
+        instance.views_by.add(user_object)
+        return instance
 
 class AnswerSerializer(serializers.ModelSerializer):
     class Meta:
