@@ -4,8 +4,6 @@ from task.models import Task
 from task.serializers import TaskAddViewSerializer
 from django.contrib.auth.models import User
 
-
-
 class AddViewAPI(APIView):
     def put(self, request, *args, **kwargs):
         task_object = Task.objects.get(pk=kwargs.get("task_pk"))
